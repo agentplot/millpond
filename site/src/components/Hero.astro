@@ -1,10 +1,9 @@
 ---
-// The start page's hero: the name, the pitch, the status, the actions and
-// the animated diagram. Every other page with a hero gets Starlight's own.
+// The start page's hero: the name, the pitch, the actions and the animated
+// diagram. Every other page with a hero gets Starlight's own.
 import Default from '@astrojs/starlight/components/Hero.astro';
 import { LinkButton } from '@astrojs/starlight/components';
 import Diagram from './Diagram.astro';
-import Status from './Status.astro';
 
 const route = Astro.locals.starlightRoute;
 const home = route.id === '';
@@ -16,7 +15,6 @@ const { title = data.title, tagline, actions = [] } = data.hero || {};
   home ? (
     <div class="home-hero">
       <div class="copy">
-        <Status />
         <h1 id="_top" data-page-title set:html={title} />
         {tagline && <p class="tagline" set:html={tagline} />}
         <div class="actions">

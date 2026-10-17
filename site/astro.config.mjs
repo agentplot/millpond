@@ -19,12 +19,13 @@ export default defineConfig({
         alt: 'millpond',
       },
       favicon: '/favicon.svg',
-      // The family's header (its bar above Starlight's) and footer, from
-      // @agentplot/site-theme; the start page's hero, with the animated
-      // diagram, is millpond's own.
+      // The family's header (its bar above Starlight's), footer and status
+      // banner, from @agentplot/site-theme; the start page's hero, with the
+      // animated diagram, is millpond's own.
       components: {
         Header: '@agentplot/site-theme/starlight/Header.astro',
         Footer: '@agentplot/site-theme/starlight/Footer.astro',
+        Banner: '@agentplot/site-theme/starlight/Banner.astro',
         Hero: './src/components/Hero.astro',
       },
       // The family's type, ink and accent, then the diagrams' palette.
