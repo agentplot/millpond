@@ -12,6 +12,12 @@ cd site && bun run dev         # http://localhost:4321/millpond/
 devenv shell -- site-shots <dir>   # screenshots: every page, both widths, both themes, and diagram frames
 ```
 
+The family's look is `@agentplot/site-theme`: its `starlight.css` carries
+the type, the ink and paper of both themes and the accent, `--ap-accent`,
+which its family bar sets from the family list (millpond's blue). Its
+header puts the family bar above Starlight's, its footer adds the family's,
+and How it fits shows its family diagram with millpond highlighted.
+
 ## Where things live
 
 | path | what |
@@ -20,8 +26,7 @@ devenv shell -- site-shots <dir>   # screenshots: every page, both widths, both 
 | `src/diagrams/` | the diagrams, drawn at build time: `kit.ts` the builder, one file per diagram |
 | `src/components/Diagram.astro` | inlines a diagram's wide and narrow layouts and shows the one its column fits |
 | `src/components/Hero.astro` | the start page's hero, with the animated diagram |
-| `src/components/FamilyDiagramPlaceholder.astro` | stands in for `@agentplot/site-theme`'s family diagram until the theme is published |
-| `src/styles/brand.css` | the family's type and ink, millpond's accent in `--millpond-accent`, and the diagrams' palette |
+| `src/styles/brand.css` | the diagrams' palette, `--dg-*`, drawn from the theme's `--ap-*` tokens |
 | `scripts/shots.mjs` | the screenshots, with Playwright and the Chromium devenv provides |
 
 ## The diagrams

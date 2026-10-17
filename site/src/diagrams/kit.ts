@@ -3,8 +3,9 @@
 // diagram is drawn twice, a wide and a narrow layout (Diagram.astro shows the
 // one its column fits), and each copy's classes, keyframes and ids are
 // prefixed so no two copies on a page meet. Colours are the --dg-* variables
-// of src/styles/brand.css, so a diagram follows the site's theme toggle; a
-// standalone copy (the README's) carries its own palette instead.
+// of src/styles/brand.css, drawn from the family theme's tokens, so a diagram
+// follows the site's theme toggle; a standalone copy (the README's) carries
+// its own palette instead.
 
 export type Frames = [number, string][];
 
@@ -18,13 +19,14 @@ export interface RenderOptions {
   standalone?: boolean;
 }
 
-// The palette a standalone copy carries, the same values as brand.css.
+// The palette a standalone copy carries: brand.css's --dg-* as they
+// resolve from @agentplot/site-theme's tokens and millpond's accent.
 const LIGHT =
-  '--dg-bg:#ebe9e2;--dg-panel:#fbfaf7;--dg-soft:#e2dfd6;--dg-rule:#d0ccc1;--dg-fg:#0e1116;' +
-  '--dg-muted:#5d6370;--dg-accent:#1d65a6;--dg-accent-soft:#e0e9f1;--dg-ink:#f7f6f2;--dg-ok:#1f8a4c;--dg-bad:#c0392b';
+  '--dg-bg:#e9e7e0;--dg-panel:#f2f1ec;--dg-soft:#dbd9d1;--dg-rule:#c9c7bf;--dg-fg:#0e1116;' +
+  '--dg-muted:#5d6370;--dg-accent:#2160b0;--dg-accent-soft:#c8d4e0;--dg-ink:#f7f6f2;--dg-ok:#1f8a4c;--dg-bad:#c0392b';
 const DARK =
-  '--dg-bg:#121821;--dg-panel:#1a212b;--dg-soft:#212a36;--dg-rule:#2f3a48;--dg-fg:#eef0f2;' +
-  '--dg-muted:#9aa4b1;--dg-accent:#62b0e8;--dg-accent-soft:#25394d;--dg-ink:#0e1116;--dg-ok:#45c27a;--dg-bad:#f08a7e';
+  '--dg-bg:#161a21;--dg-panel:#1b2029;--dg-soft:#21232b;--dg-rule:#2a2f38;--dg-fg:#f2f1ec;' +
+  '--dg-muted:#8c92a0;--dg-accent:#6ea8fe;--dg-accent-soft:#2c3b54;--dg-ink:#0e1116;--dg-ok:#45c27a;--dg-bad:#f08a7e';
 
 // What every diagram draws with. ROOT_W is the copy's root class.
 const BASE = `
