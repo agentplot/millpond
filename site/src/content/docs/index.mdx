@@ -1,0 +1,70 @@
+---
+title: millpond
+description: millpond is the inbox for events that should change a repository's work. It lands each event once, keeps the raw material off git, and sends curated work to one worktree at a time.
+template: splash
+hero:
+  tagline: The inbox for events that should change a repository's work. Adapters report what happened, millpond lands each event once, a Claude session proposes what to do with each one, and one item of work goes to one worktree, where sluice lands it.
+  actions:
+    - text: How it works
+      link: /millpond/how-it-works/
+      icon: right-arrow
+    - text: Read the design
+      link: /millpond/design/
+      icon: right-arrow
+      variant: secondary
+    - text: GitHub
+      link: https://github.com/agentplot/millpond
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Why
+
+Some events outside a repository should change its work: a release of
+something it depends on, a decision in a meeting, a file someone sends.
+Each arrives somewhere different, in a different shape, and most of them
+ask for nothing. millpond gives them one way in and one way out.
+
+<CardGrid>
+  <Card title="Lands each event once" icon="seti:git">
+    An adapter keys every event it reports. millpond takes a key once, so
+    an adapter lists a window again without harm and two hosts never land
+    the same release twice.
+  </Card>
+  <Card title="Keeps the raw material off git" icon="document">
+    The inbox is a git repository of small records. A transcript or a
+    full set of release notes stays on the host behind a pointer, so a
+    meeting's words never reach GitHub.
+  </Card>
+  <Card title="Works a backlog in batches" icon="list-format">
+    A Claude session proposes one move for each of fifty signals. You
+    change the rows you disagree with, and one commit writes the batch.
+  </Card>
+  <Card title="Sends one item to one worktree" icon="rocket">
+    Curation joins signals into items. millpond starts an agent on an
+    item's brief in a worktree of its own, and records sluice's landing
+    against the item.
+  </Card>
+</CardGrid>
+
+## Where it stands
+
+millpond is designed and not built. Its design lives in
+[agentplot/blueprints](https://github.com/agentplot/blueprints) with
+the design of every tool around it, and its statement comes next. The
+[roadmap](/millpond/roadmap/) says what gets built in what order.
+
+<CardGrid>
+  <LinkCard
+    title="How it works"
+    description="The capture lines, the seven steps a capture takes, and a backlog worked in batches."
+    href="/millpond/how-it-works/"
+  />
+  <LinkCard
+    title="How it fits"
+    description="headwater and eddy feed it, sluice lands its work, crew calls it, and Flywheel reads the same inboxes."
+    href="/millpond/how-it-fits/"
+  />
+</CardGrid>

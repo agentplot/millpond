@@ -1,0 +1,94 @@
+---
+title: Roadmap
+description: What gets built in what order, and where millpond meets crew, swancloud and Flywheel.
+banner:
+  content: millpond is designed, not built. This page describes the design in agentplot/blueprints.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+Nothing of millpond is built yet. Each step ends with something running
+on real work before the next one depends on it. A step is done when a
+check passes or an observation holds. The step names are the plan's, in agentplot/blueprints'
+`design/capture/plan.md`.
+
+## millpond's own steps
+
+<Steps>
+
+1. **P1 · The statement.** millpond's statement is written from the
+   capture design. A fresh model reconstructs millpond from it, and the
+   questions it asks are ruled and folded back in.
+
+   _Needs_ the capture design's decisions ruled. _Done when_ the
+   statement lands on blueprints' `main`.
+
+2. **P2 · The repository's rules.** This repository gains its founding
+   decisions, its rules, its sluice gate and its OpenSpec configuration.
+
+   _Needs_ P1. _Done when_ sluice protects `main` and the first change
+   lands through it.
+
+3. **P3 · The core.** `millpond land`, `run`, `tick` and
+   `status --json`, with the seven steps, the raw bank, cursors and the
+   write lock; the import and the built-in adapters; `millpond.toml`.
+
+   _Needs_ P2 and flywheel-next's capture, signals and adapters crates.
+   _Done when_ millpond passes the conformance pack and a capture landed
+   twice writes nothing the second time. A refused line leaves the rest
+   of the run landed, and a run that exits without `done` keeps its
+   cursor.
+
+4. **P4 · The tools and the Claude Code plugin.** `millpond mcp` serves
+   the reader and curation tools, and the plugin ships the curate and
+   read skills.
+
+   _Needs_ P3. _Done when_ a session on a trial inbox proposes a batch
+   of fifty, you change a row, and one `moves` call writes the batch as
+   changed; and a reader's excerpt missing from the raw material is
+   refused.
+
+5. **P5 · The herdr plugin.** It shows the count and age of unmoved
+   signals by source, and opens a proposed batch for review row by row.
+
+   _Needs_ P3. _Done when_ its counts match `millpond status --json` on
+   the trial inbox.
+
+6. **P6 · Send an item to a worktree.** `send` makes a worktree for an
+   item, writes its brief, starts an agent and records sluice's landing.
+
+   _Needs_ P4. _Done when_ an item of two bumps sent from herdr lands
+   through sluice and shows its landing, and a send from an inbox crew
+   keeps is refused.
+
+</Steps>
+
+## Where it meets the others
+
+- **F1 to F3, Flywheel's statement and flywheel-next.** The contract and
+  the inbox enter Flywheel's statement, and flywheel-next splits out the
+  capture, signals and adapters crates with the conformance pack. P3
+  builds on them.
+- **S1, swancloud.** The fleet's release adapter speaks the contract and
+  lands into a trial inbox under `millpond run` for a week, beside its
+  current path.
+- **C1 and C2, crew.** crew's record says a partition's signals live in
+  its inbox, and crew calls millpond: each partition's branch becomes an
+  inbox, imported once, and `crew signal` writes through `millpond land`.
+- **S3, swancloud.** One list names each part, its inbox, host and
+  schedule. A timer per inbox runs `millpond tick`, and the doctor shows
+  a row per part.
+- **C3 and C4, crew.** crew's reader writes signals with millpond's
+  `read`, and crew's curator works each inbox through millpond's tools.
+  The planner turns accepted items into chores and units.
+- **C5, crew and swancloud.** One real release travels the whole path:
+  captured, curated into an item, planned, bumped by a team and landed
+  by sluice.
+- **F4 and F5, flywheel-next and crew.** Flywheel hosts on the same
+  crates and reads an inbox millpond kept with no import, and crew
+  becomes Flywheel.
+
+headwater and eddy proceed beside millpond once its core exists, each in
+its own repository: headwater's capture part lands through `millpond run`
+(H6), and eddy's meeting parts pass the conformance pack's meeting checks
+(E1).

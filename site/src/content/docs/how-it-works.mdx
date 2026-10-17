@@ -1,0 +1,132 @@
+---
+title: How it works
+description: How millpond takes captures in, lands each once, keeps raw material off git, and turns a backlog of signals into items of work.
+banner:
+  content: millpond is designed, not built. This page describes the design in agentplot/blueprints.
+---
+
+import Diagram from '../../components/Diagram.astro';
+
+An event reaches millpond as a **capture**. millpond keeps captures in an
+**inbox**, a git repository or a branch in one. Each capture becomes
+**signals**: one when the capture carries its own excerpt, or as many as
+a reader session finds in it. Curation gives every signal one
+move and joins signals into **items**, and an item is the work an agent
+does.
+
+## One way in
+
+An adapter knows one source. It lists the source's events, keys each
+one, fetches the raw material and writes it to a directory millpond
+hands it. Then it prints one JSON line per event on standard output:
+
+```json
+{"capture": {"key": "release/mise/2026.10.10", "source": "release", "event_at": "2026-10-10T14:02:11Z", "raw": ["mise-2026.10.10/notes.md"], "excerpt": {"text": "…the notes, whole…", "kind": "ask"}}}
+{"cursor": "2026-10-17T04:30:05Z"}
+{"done": {"listed": 14, "failed": [{"what": "github:jdx/mise", "why": "HTTP 502"}]}}
+```
+
+The **key** is the event's identity, the same from every host and every
+run. The **cursor** is the adapter's own bookmark, which millpond hands
+back on the next run. The **done** line ends a complete run with its
+counts and its failures. An adapter keeps no list of what it reported,
+since millpond dedupes by key.
+
+`millpond run <part>` starts an adapter on a schedule and keeps its
+cursor and status. `millpond land` takes the same lines on standard
+input from anything that pipes them in: a deployer reporting a failed
+step, a script, a person. `millpond tick` runs every part whose schedule
+is due, so one timer on a host serves every part there.
+
+## Lines into git, raw files on the host
+
+<Diagram name="lines" caption="One run of eddy's meeting part. The line becomes a commit; the transcript stays in the raw bank, behind a pointer the capture carries." />
+
+A line holds what millpond checks and what enters git: the capture and,
+for a capture that is its own excerpt, its signal. A raw file holds the
+event as the source served it, whole: a transcript, the full release
+notes, a log. It can run to megabytes. millpond banks it on the host,
+outside git, and the capture points at it as `<host>:<path>`.
+
+Three readers follow that pointer:
+
+- a reader session, for which a meeting's transcript is the whole input;
+- millpond's check that every excerpt a reader writes appears verbatim
+  in the raw material;
+- a person reading past the cut.
+
+## The seven steps
+
+<Diagram name="steps" caption="Four lines from one run. Each takes the steps in order, and a line that stops never stops the others." />
+
+For every line, millpond:
+
+1. **checks it**, and refuses a line with a bad key, a missing field or
+   an excerpt with no text, naming it in the run;
+2. **looks up the key** in every capture the inbox holds, and passes
+   over a key it already holds;
+3. **banks the raw files** on the host, under the capture's name;
+4. **writes the capture**, with its pointer into the raw bank;
+5. **writes the one signal** of a capture that carries an excerpt. It
+   cuts the text at a line under the inbox's limit, 8 KiB unless the
+   settings say otherwise, and closes it with what the raw record holds
+   past the cut;
+6. **marks the capture unread** when it carries no excerpt, which
+   charges a reader;
+7. **records the run**: its counts, its failures, its cursor and the
+   status a fleet's doctor reads from `millpond status --json`.
+
+A run that exits without `done` keeps every capture it already handed
+over, since a capture lands once whatever happens. Its cursor stays
+where it was, and millpond records the run as failed.
+
+## Reading
+
+A release is its own excerpt: its notes are the excerpt, and its signal
+asks for a bump. A meeting is not, so a **reader**, a Claude session,
+turns its transcript into signals through millpond's `read` tool.
+millpond refuses a signal whose excerpt does not appear verbatim in the
+capture's raw material. The reader's instructions are the inbox's own
+data: what makes a signal, and how to name a speaker the transcript
+leaves unnamed.
+
+## Working a backlog
+
+<Diagram name="backlog" caption="Nobody picks through hundreds of signals by hand. A session proposes, you change what you disagree with, and one commit writes the batch." />
+
+The curate skill starts a Claude session that asks millpond's `signals`
+tool for the oldest fifty unmoved signals, reads the raw material of the
+unclear ones, and proposes one move for each. You accept the batch or
+change rows, and the session writes it with one `moves` call, one
+commit. The next batch starts where that one ended.
+
+| Move | What follows |
+|---|---|
+| `drop` | millpond records the reason. |
+| `answered` | The move names the claim or record that settled it. |
+| `challenge` | The signal weighs against a claim. Only an inbox beside Flywheel's claims has one. |
+| `join` | The signal makes an item, or grows a proposed one, with any number of others. |
+| `attach` | The signal joins an item already sent. |
+| `route` | The signal becomes a chore, an item of one, or an ask millpond records. |
+
+An unmoved signal stays in the inbox until a move settles it, and its
+weight counts by the date of its event.
+
+## One item, one worktree
+
+An item is the unit of work: the signals curation joined, as five of a
+meeting's ten, or two bumps that move together. millpond keeps its brief
+and every place it was sent.
+
+<Diagram name="send" caption="millpond makes the worktree, writes the brief and starts the agent. sluice lands the work, and the landing comes back to the item." />
+
+`send` makes a worktree of the repository the send names, on a branch
+named for the item, and writes the brief there. Then it starts an agent
+on the brief, in a herdr pane or as a command it prints. The agent submits its work
+through [sluice](https://agentplot.github.io/sluice/), and millpond
+writes the landing against the item from sluice's record of that branch.
+
+An inbox that crew keeps sends no item to a worktree. Its settings hand
+items to crew's planner, which orders them across teams and turns each
+into a chore or a unit. Planning across items is crew's, and Flywheel's
+later, and never millpond's.
