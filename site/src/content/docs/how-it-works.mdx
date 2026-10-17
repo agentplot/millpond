@@ -9,8 +9,9 @@ An event reaches millpond as a **capture**. millpond keeps captures in an
 **inbox**, a git repository or a branch in one. Each capture becomes
 **signals**: one when the capture carries its own excerpt, or as many as
 a reader session finds in it. Curation gives every signal one
-move and joins signals into **items**, and an item is the work an agent
-does.
+move and joins signals into **items**. millpond sends an item to one
+worktree, where an agent does the work, or an item that asks a question
+to a sounding, which ends on a conclusion you accept.
 
 ## One way in
 
@@ -110,21 +111,38 @@ commit. The next batch starts where that one ended.
 An unmoved signal stays in the inbox until a move settles it, and its
 weight counts by the date of its event.
 
-## One item, one worktree
+## Where an item goes
 
 An item is the unit of work: the signals curation joined, as five of a
 meeting's ten, or two bumps that move together. millpond keeps its brief
-and every place it was sent.
+and every place it was sent. `send` takes it to one of two places.
 
-<Diagram name="send" caption="millpond makes the worktree, writes the brief and starts the agent. sluice lands the work, and the landing comes back to the item." />
+<Diagram name="send" caption="A question goes to a sounding, and its accepted conclusion becomes the item's record. The work the conclusion proposes becomes a new item, which goes to one worktree, and sluice's landing comes back to it." />
 
-`send` makes a worktree of the repository the send names, on a branch
-named for the item, and writes the brief there. Then it starts an agent
-on the brief, in a herdr pane or as a command it prints. The agent submits its work
-through [sluice](https://agentplot.github.io/sluice/), and millpond
-writes the landing against the item from sluice's record of that branch.
+**One worktree.** `send` makes a worktree of the repository the send
+names, on a branch named for the item, and writes the brief there. Then
+it starts an agent on the brief, in a herdr pane or as a command it
+prints. The agent submits its work through
+[sluice](https://agentplot.github.io/sluice/), and millpond writes the
+landing against the item from sluice's record of that branch.
 
-An inbox that crew keeps sends no item to a worktree. Its settings hand
-items to crew's planner, which orders them across teams and turns each
-into a chore or a unit. Planning across items is crew's, and Flywheel's
-later, and never millpond's.
+**A sounding.** An item that asks a question ends in an answer, not a
+change: whether to take a major release, or how to settle what a
+meeting left open. `send` opens a sounding with the item's signals and
+the captures they came from as its sources. One session works the
+question in a worktree of its own, and ends on a conclusion: the answer,
+its evidence, the work it proposes and what stays open. Code the
+session writes there to test an answer never lands from it.
+
+You decide the conclusion. Accept, and millpond keeps it as the item's
+record and makes an item of each piece of work it proposes; curation
+answers a later signal on the same subject by naming it. Go on, and the
+sounding starts another round. Drop, and it records why. A finding the
+sounding makes beyond its question comes back to millpond as a capture
+of its own, keyed `sounding/<name>/<n>`, and takes the same path as
+every other capture.
+
+An inbox that crew keeps sends no item itself. Its settings hand items
+to crew's planner, which orders them across teams and turns each into a
+chore or a unit. Planning across items is crew's, and Flywheel's later,
+and never millpond's.

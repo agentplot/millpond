@@ -30,10 +30,12 @@ where [sluice](https://github.com/agentplot/sluice) lands it.
   you disagree with, and one commit writes the batch.
 - **Sends one item to one worktree.** Curation joins signals into items.
   millpond starts an agent on an item's brief and records sluice's
-  landing against the item.
+  landing against the item. An item that asks a question goes to a
+  sounding, and the conclusion you accept becomes the item's record.
 
 millpond is one of a family. headwater reports releases, eddy lists
-meetings and sluice lands changes. crew runs teams and calls millpond as
+meetings, sounding works one question to a conclusion and sluice lands
+changes. crew runs teams and calls millpond as
 it calls sluice, and Flywheel is built later on the same crates and reads
 the same inboxes.
 

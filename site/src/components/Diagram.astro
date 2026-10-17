@@ -2,6 +2,7 @@
 // A diagram, drawn at build time by src/diagrams/ and inlined so it follows
 // the theme toggle. Each is drawn twice: the wide layout where its column has
 // room, the narrow one on a phone, chosen by the width of the column itself.
+import { find, pairCss } from '@agentplot/site-theme';
 import { diagrams } from '../diagrams';
 
 interface Props {
@@ -15,7 +16,13 @@ const draw = diagrams[name];
 if (!draw) throw new Error(`no diagram named ${name}`);
 const wide = draw('wide');
 const narrow = draw('narrow');
+// A neighbour drawn in a diagram takes its accent from the family list:
+// sounding, where millpond sends a question.
+const sounding = find('sounding');
+const neighbours = sounding ? pairCss('--dg-sounding', sounding.accent) : '';
 ---
+
+{neighbours && <Fragment set:html={`<style>${neighbours}</style>`} />}
 
 <figure class:list={['diagram', 'not-content', `diagram-${name}`]}>
   <div class="frame">

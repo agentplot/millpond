@@ -26,6 +26,14 @@ plugins, and millpond is the inbox that joins them.
     prints one capture per meeting, with the transcript as raw material
     and no excerpt, so a reader turns it into signals.
   </Card>
+  <Card title="sounding · one question">
+    Works one question in one session, in a worktree of its own, and ends
+    on a conclusion you accept, send back for another round, or drop.
+    millpond sends it an item that asks a question, keeps the accepted
+    conclusion as the item's record, and makes an item of each piece of
+    work it proposes. A finding beyond the question comes back as a
+    capture, keyed `sounding/<name>/<n>`.
+  </Card>
   <Card title="sluice · landing">
     Tests a change as merged and lands it. The agent an item starts
     submits through sluice, and millpond records the landing against the
@@ -54,7 +62,8 @@ eddy's parts stay theirs and millpond runs them like anyone else's.
   <Card title="On its own">
     **Inbox:** a git repository of your own.
     **Curates:** a Claude session through millpond's tools, and you
-    accept. **Items go** to one worktree each, landed by sluice.
+    accept. **Items go** to one worktree each, landed by sluice, or a
+    question to a sounding.
   </Card>
   <Card title="With crew">
     **Inbox:** the partition's flywheel branch in crew's state
@@ -80,6 +89,8 @@ and Flywheel imports nothing when it takes over.
   runs in those two places and nowhere else.
 - **It never plans across items.** crew's planner orders items across
   teams today, and Flywheel's does later.
+- **It never works a question.** A sounding does, and millpond keeps the
+  conclusion you accept.
 - **It never knows a source.** An adapter lists its source and keys its
   events. millpond takes whatever lines it is handed, from any adapter.
 - **It never lets raw material into git.** A transcript stays on the

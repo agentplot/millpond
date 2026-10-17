@@ -43,8 +43,7 @@ check passes or an observation holds. The step names are the plan's, in agentplo
 
    _Needs_ P3. _Done when_ a session on a trial inbox proposes a batch
    of fifty, you change a row, and one `moves` call writes the batch as
-   changed; and a reader's excerpt missing from the raw material is
-   refused.
+   changed. A reader's excerpt missing from the raw material is refused.
 
 5. **P5 · The herdr plugin.** It shows the count and age of unmoved
    signals by source, and opens a proposed batch for review row by row.
@@ -59,6 +58,18 @@ check passes or an observation holds. The step names are the plan's, in agentplo
    through sluice and shows its landing, and a send from an inbox crew
    keeps is refused.
 
+7. **Q5 · Send a question to a sounding.** `send` takes a sounding as
+   its target. millpond opens the sounding with the item's signals and
+   captures as its sources, keeps the accepted conclusion as the item's
+   record, and makes an item of each piece of work the conclusion
+   proposes.
+
+   _Needs_ P6 and sounding's core. _Done when_ an item asking whether to
+   take a major release goes to a sounding and its accepted conclusion
+   shows on the item. The bump the conclusion proposes arrives as a new
+   item, and curation answers the release's next signal by naming the
+   conclusion.
+
 </Steps>
 
 ## Where it meets the others
@@ -67,6 +78,9 @@ check passes or an observation holds. The step names are the plan's, in agentplo
   the inbox enter Flywheel's statement, and flywheel-next splits out the
   capture, signals and adapters crates with the conformance pack. P3
   builds on them.
+- **Q1 to Q4, sounding.** sounding's statement, its repository, its core
+  with the Claude Code plugin, and its herdr plugin. sounding needs
+  nothing of millpond's until millpond sends it questions in Q5.
 - **S1, swancloud.** The fleet's release adapter speaks the contract and
   lands into a trial inbox under `millpond run` for a week, beside its
   current path.
